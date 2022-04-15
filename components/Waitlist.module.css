@@ -1,0 +1,55 @@
+.formWrapper {
+  border-radius: 9999px;
+  background-color: var(--dark-white-color);
+  display: flex;              /* two column display for input + button */
+  flex-wrap: nowrap;
+  width: 80%;
+  margin: auto;
+}
+
+@media (max-width: 600px) {
+  .formInput {
+    font-size: 0.9rem !important;
+  }
+}
+
+@media (min-width: 640px) { 
+  .formWrapper {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) { 
+  .formWrapper {
+    width: 55vw;
+  }
+}
+
+/* Shared by the input and button so they are the same size and style */
+.formInput {
+  width: 10%;
+  flex: 1;
+  outline: none;
+  padding: 1.5rem;         
+  border: none;
+  font-size: 1.1rem;
+}
+
+.formTextInput {
+  text-align: left;
+  background-color: transparent;
+}
+
+.formSubmitButton {
+  max-width: 10rem;
+  white-space: nowrap;
+  border-radius: 9999px;
+  box-shadow: inset 0 0 0 10px var(--dark-white-color), inset 0 0 0 9999px var(--secondary-color);
+
+  color: var(--main-color);
+}
+
+.error {
+  color: red;
+}
+  
