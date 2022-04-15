@@ -6,5 +6,9 @@ module.exports = {
     AIRTABLE_BASE_KEY: process.env.AIRTABLE_BASE_KEY,
     DISCORD_INVITE: 'https://discord.com/',
   },
+  images: {
+    loader: 'akamai',
+    path: '',
+  },
   reactStrictMode: true,
 }
