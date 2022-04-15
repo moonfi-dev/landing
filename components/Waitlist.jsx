@@ -1,23 +1,50 @@
 import styles from './Waitlist.module.css'
 // import Image from 'next/image'
 import { useState } from 'react';
+import airtable from 'airtable';
+import validator from "email-validator"
 
 export const Waitlist = () => {
-  const [email, setEmail] = useState("");
-  const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [error, setError] = useState(null);
-
+    const [email, setEmail] = useState("");
+    const [hasSubmitted, setHasSubmitted] = useState(false);
+    const [error, setError] = useState(null);
+    
     const submit = async (e) => {
         e.preventDefault();
-        let response = await fetch("/api/waitlist", {
-            method: "POST",
-            body: JSON.stringify({email: email})
-        })
-        if (response.ok) {
-            setHasSubmitted(true);
-        } else {
-            setError(await response.text())
+        console.log("test")
+        // Validate email
+        if (!email) {
+            setError("Missing email");
+            return;
+        } else if (email.length > 300) {
+            setError("Email is too long");
+            return;
+        } else if (!validator.validate(email)) {
+            setError("Invalid email");
+            return;
         }
+    
+        airtable.configure({
+            endpointUrl: "https://api.airtable.com",
+            apiKey: process.env.AIRTABLE_API_KEY
+        });
+        
+        const base = airtable.base(process.env.AIRTABLE_BASE_KEY);
+        
+        base('Table 1').create([
+        {
+            "fields": {
+            "Email": JSON.stringify(email)
+            }
+        }
+        ], function(err, records) {
+        if (err) {
+            setError(err)
+            return;
+        }
+        });
+
+        setHasSubmitted(true);
     }
 
     if (hasSubmitted) {

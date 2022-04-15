@@ -21,7 +21,7 @@ export const Navbar = () => {
   return (
     <>
       <nav id="#navbar" className='flex items-center flex-wrap px-10 py-6'>
-        <Link href='/' as={ process.env.BACKEND_URL + '/'}>
+        <Link href='/'>
           <a className='inline-flex items-center'>
             <span className='text-xl text-main-color font-bold tracking-wide'>
               {process.env.companyName}
