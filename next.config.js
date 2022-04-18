@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+  assetPrefix: './',
   env: {
     companyName: 'moonfi',
     AIRTABLE_API_KEY: 'keyFAXO0VtU5TJJps',
@@ -11,5 +12,4 @@ module.exports = {
     path: '',
   },
   reactStrictMode: true,
-  assetPrefix: './',
 }
