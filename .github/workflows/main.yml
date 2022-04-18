@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      NEXT_PUBLIC_BASE_PATH: /unidental
+      NEXT_PUBLIC_BASE_PATH: /moonfi
 
     strategy:
       matrix:

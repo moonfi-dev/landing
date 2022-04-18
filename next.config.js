@@ -8,7 +8,7 @@ module.exports = {
     DISCORD_INVITE: 'https://discord.gg/AY85vWmgev',
   },
   images: {
-    loader: 'imgix',
+    loader: 'akamai',
     path: '',
   },
   reactStrictMode: true,
