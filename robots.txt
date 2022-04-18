@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://moonfi.co
+
+# Sitemaps
+Sitemap: https://moonfi.co/sitemap.xml
