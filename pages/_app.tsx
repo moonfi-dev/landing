@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps, router }: AppProps): JSX.Element {
                 }}
                 canonical={url}
             />
-            <Component {...pageProps} />
+            <Component {...pageProps} canonical={url} key={url} />
         </>
     )
 }

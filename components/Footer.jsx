@@ -13,6 +13,13 @@ export const Footer = () => {
   return (
     <>
       <footer className="flex flex-wrap h-32 w-full items-center align-bottom lg:px-20 md:px-10 px-5 bg-secondary-color">
+        {/* <Link href='/'>
+          <a className='inline-flex items-center'>
+            <span className='text-xl text-main-color font-bold tracking-wide'>
+              {process.env.companyName}
+            </span>
+          </a>
+        </Link> */}
         <button
           type="button" onClick={() => { handleToTop() }}
           className=''
