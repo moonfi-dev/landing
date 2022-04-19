@@ -31,7 +31,7 @@ const Home: NextPage = () => {
       <main className="w-screen">
         <div className="min-h-screen flex flex-col">
           <Navbar />
-          <div className="grow flex flex-col items-center justify-between justify-items-stretch text-center lg:px-36 px-12 pb-5">
+          <div className="grow flex flex-col lg:px-36 px-12 pb-5">
             <Header />
             <div className="flex flex-row sm:w-full justify-between justify-items-stretch lg:mb-10 md:mb-8 mb-2 mt-5">
               <Link href={process.env.DISCORD_INVITE!}>
