@@ -10,10 +10,13 @@ export const Header = () => {
                 <div className="flex flex-col">
                     <div className="flex-1 text-left pr-10 lg:pt-28 pb-10">
                         <div className={styles.typewriter1}>
-                            <p className="font-bold lg:text-6xl text-4xl text-main-color tracking-wider">Lorem ipsum</p>
+                            <p className="font-bold lg:text-6xl text-4xl text-main-color tracking-wider">The Most Exciting</p>
                         </div>
                         <div className={styles.typewriter2}>
-                            <p className="font-bold lg:text-6xl text-4xl text-main-color tracking-wider">dolor sit amet </p>
+                            <p className="font-bold lg:text-6xl text-4xl text-main-color tracking-wider">Savings Account</p>
+                        </div>
+                        <div className={styles.typewriter3}>
+                            <p className="font-bold lg:text-6xl text-4xl text-main-color tracking-wider">On the Market</p>
                         </div>
                     </div>
                     <div className="flex-1">
