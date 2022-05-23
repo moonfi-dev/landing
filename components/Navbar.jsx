@@ -53,12 +53,16 @@ export const Navbar = () => {
           }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
         >
           <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto'>
-            <button
-              type="button" onClick={() => { handleJoinWaitlist() }}
-              className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded-full bg-secondary-color text-main-color font-semibold items-center justify-center'
-            >
-                Join Waitlist
-            </button>
+            <Link href="https://app.moonfi.co">
+              <button
+                type="button" 
+                // onClick={() => { handleJoinWaitlist() }}
+                className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded-full bg-secondary-color text-main-color font-semibold items-center justify-center'
+              >
+                  Go to App
+              </button>
+            </Link>
+            
           </div>
         </div>
       </nav>
