@@ -11,16 +11,21 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav id="#navbar" className='flex items-center flex-wrap px-10 py-6'>
+      <nav id="#navbar" className='flex justify-between items-center flex-wrap md:px-10 px-3 py-6'>
         <Link href='/'>
-          <a className='inline-flex items-center'>
+          <a className='inline-flex items-center lg:basis-1/4 basis-1/5'>
             <span className='text-xl text-main-color font-bold tracking-wide'>
               {process.env.companyName}
             </span>
           </a>
         </Link>
+        <div className='animate-bounce flex-1 grow items-center'>
+          <span className='text-xl text-main-color font-semibold tracking-wider'>
+            Play Wordle, Earn Money
+          </span>
+        </div>
         <button
-          className='inline-flex p-3 rounded lg:hidden text-main-color ml-auto outline-none'
+          className='inline-flex flex-row-reverse p-3 rounded lg:hidden basis-1/5 text-main-color ml-auto outline-none'
           onClick={handleClick}
         >
           <svg
@@ -41,7 +46,7 @@ export const Navbar = () => {
         <div
           className={`${
             active ? '' : 'hidden'
-          }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
+          }   w-full lg:inline-flex lg:basis-1/4`}
         >
           <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto'>
             <Link href="/about" passHref>

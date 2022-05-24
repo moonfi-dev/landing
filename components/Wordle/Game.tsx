@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useEffect, useRef, useState } from "react";
 import { Row, RowState } from "./Row";
 import dictionary from "./words/dictionary.json";
@@ -31,64 +32,23 @@ interface GameProps {
   keyboardLayout: string
 }
 
-const targets = targetList.slice(0, targetList.indexOf("murky") + 1); // Words no rarer than this one
+const TARGET_WORD = "crane"
 
 const WORD_LENGTH = 5
-
-function randomTarget(wordLength: number): string {
-  const eligible = targets.filter((word) => word.length === wordLength);
-  let candidate: string;
-  do {
-    candidate = pick(eligible);
-  } while (/\*/.test(candidate));
-  return candidate;
-}
-
-function parseUrlGameNumber(): number {
-  const gameParam = urlParam("game");
-  if (!gameParam) return 1;
-  const gameNumber = Number(gameParam);
-  return gameNumber >= 1 && gameNumber <= 1000 ? gameNumber : 1;
-}
 
 function Game(props: GameProps) {
   const [gameState, setGameState] = useState(GameState.Playing);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [currentGuess, setCurrentGuess] = useState<string>("");
-  const [wordLength, setWordLength] = useState(WORD_LENGTH);
-  const [gameNumber, setGameNumber] = useState(parseUrlGameNumber());
-  const [target, setTarget] = useState(() => {
-    resetRng();
-    return randomTarget(wordLength);
-  });
-  const [hint, setHint] = useState<string>("Make your first guess!")
-  const currentSeedParams = () =>
-    `?seed=${seed}&length=${wordLength}&game=${gameNumber}`;
-  useEffect(() => {
-    if (seed) {
-      window.history.replaceState(
-        {},
-        document.title,
-        window.location.pathname + currentSeedParams()
-      );
-    }
-  }, [wordLength, gameNumber]);
+  const [target, setTarget] = useState<string>(TARGET_WORD)
+
+  const [errorMessage, setErrorMessage] = useState("")
+  const [doneMessage, setDoneMessage] = useState("")
+  const [currentAPY, setCurrentAPY] = useState("")
+
   const tableRef = useRef<HTMLTableElement>(null);
 
-  useEffect(() => {
-    const result: number = guesses.length
-    const apy = wordleScoreToAPY(result)
-    const gameOver = (verbed: string) =>
-    `You ${verbed}.\n Click Earn Now on the top right\n to earn ${apy}% APY today!`
-
-    if (gameState == GameState.Won) {
-      setHint(gameOver(`won in ${result}`))
-    } else if (gameState == GameState.Lost) {
-      setHint(gameOver('lost'))
-    }
-  }, [gameState, guesses, target])
-
-  async function share(copiedHint: string, text?: string) {
+  async function share(copiedMessage: string, text?: string) {
     var url = 'https://moonfi.co'
     const body = url + (text ? '\n\n' + text : '')
     if (
@@ -104,75 +64,73 @@ function Game(props: GameProps) {
     }
     try {
       await navigator.clipboard.writeText(body)
-      setHint(copiedHint)
+      setDoneMessage(copiedMessage)
       return
     } catch (e) {
       console.warn('navigator.clipboard.writeText failed:', e)
     }
-    setHint(url)
   }
 
-  const startNextGame = () => {
-    const newWordLength = WORD_LENGTH;
-    setWordLength(newWordLength);
-    setTarget(randomTarget(newWordLength));
-    console.log(target)
-    setHint("");
-    setGuesses([]);
-    setCurrentGuess("");
-    setGameState(GameState.Playing);
-    setGameNumber((x) => x + 1);
-  };
+  useEffect(() => {
+    setErrorMessage("")
+
+    const currentApy = wordleScoreToAPY(guesses.length)
+    setCurrentAPY(currentApy.toString())
+
+    const gameOver = (apy: number) =>
+    `Congrats! Click here to earn your ${apy}% APY today!`
+
+    if (gameState == GameState.Won) {
+      setDoneMessage(gameOver(currentApy))
+    } else if (gameState == GameState.Lost) {
+      setDoneMessage("Refresh to try again!")
+    }
+  }, [gameState, guesses])
 
   const onKey = (key: string) => {
     if (gameState !== GameState.Playing) {
-      if (key === "Enter") {
-        startNextGame();
+      if (key === 'Enter') {
+        // TODO(!): Show congrats screen? Go to user balance?
       }
-      return;
+      return
     }
     if (guesses.length === props.maxGuesses) return;
     if (/^[a-z]$/i.test(key)) {
       setCurrentGuess((guess) =>
-        (guess + key.toLowerCase()).slice(0, wordLength)
+        (guess + key.toLowerCase()).slice(0, WORD_LENGTH)
       );
       tableRef.current?.focus();
-      setHint("");
     } else if (key === "Backspace") {
       setCurrentGuess((guess) => guess.slice(0, -1));
-      setHint("");
+      setErrorMessage("")
     } else if (key === "Enter") {
-      if (currentGuess.length !== wordLength) {
-        setHint("Too short");
+      if (currentGuess.length !== WORD_LENGTH) {
+        setErrorMessage("Too short");
         return;
       }
       if (!dictionary.includes(currentGuess)) {
-        setHint("Not a valid word");
+        setErrorMessage("Not a valid word");
         return;
       }
-      for (const g of guesses) {
-        const c = clue(g, target);
-        const feedback = violation(props.difficulty, c, currentGuess);
-        if (feedback) {
-          setHint(feedback);
-          return;
-        }
-      }
+      setErrorMessage("")
+      // for (const g of guesses) {
+      //   const c = clue(g, target);
+      //   const feedback = violation(props.difficulty, c, currentGuess);
+      //   if (feedback) {
+      //     setGameMessage(feedback);
+      //     return;
+      //   }
+      // }
       setGuesses((guesses) => guesses.concat([currentGuess]));
       setCurrentGuess((guess) => "");
 
       const gameOver = (verbed: string) =>
       `You ${verbed}! The answer was ${target.toUpperCase()}`
-      console.log(target)
+      
       if (currentGuess === target) {
-        setHint(gameOver("won"));
         setGameState(GameState.Won);
       } else if (guesses.length + 1 === props.maxGuesses) {
-        setHint(gameOver("lost"));
         setGameState(GameState.Lost);
-      } else {
-        setHint("");
-        speak(describeClue(clue(currentGuess, target)));
       }
     }
   };
@@ -234,17 +192,45 @@ function Game(props: GameProps) {
       >
         <tbody>{tableRows}</tbody>
       </table>
-      <p
-        className="text-xl"
-        role="alert"
-        style={{
-          color: 'var(--main-color)',
-          userSelect: /https?:/.test(hint) ? 'text' : 'none',
-          whiteSpace: 'pre-wrap',
-        }}
-      >
-        {hint || `\u00a0`}
-      </p>
+      <div className="flex flex-col justify-center items-center">
+        { currentAPY && (
+          <div className="flex flex-col justify-center items-center">
+            <div className="
+              flex
+              text-5xl font-bold text-main-color hover:text-secondary-color
+            "> {/* rounded-md outline outline-secondary-color outline-offset-4 outline-[0.4em] */}
+              {currentAPY}.00%
+            </div>
+            <div className="text-black tracking-wide text-sm">
+              Yield through MoonFi
+            </div>
+          </div>
+        )}
+        { errorMessage && (
+          <p
+            className="flex px-3 my-3 text-md font-bold tracking-wide rounded-full bg-red-500"
+            role="alert"
+            style={{
+              color: 'white',
+              userSelect: /https?:/.test(errorMessage) ? 'text' : 'none',
+              whiteSpace: 'pre-wrap',
+            }}
+          >
+            {errorMessage}
+          </p>
+        )}
+        { doneMessage && (
+          <Link href="https://app.moonfi.co/" passHref>
+            <button
+              type="button"
+              className="w-full items-center justify-center rounded-full bg-secondary-color sm:px-5 px-2 py-2 md:mt-5 my-2 text-main-color font-semibold md:tracking-wide md:text-lg sm:text-base text-xs"
+            >
+              {doneMessage}
+            </button>
+          </Link>
+        )}
+
+      </div>
       <Keyboard
         layout={props.keyboardLayout}
         letterInfo={letterInfo}
@@ -253,7 +239,7 @@ function Game(props: GameProps) {
       <div className="flex flex-col py-auto">
           {gameState !== GameState.Playing && (
             <button
-              className="m-auto rounded-full border border-transparent bg-main-color px-10 py-4 text-base text-white shadow hover:bg-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-main-color disabled:cursor-not-allowed disabled:opacity-50"
+              className="m-auto rounded-full border border-transparent px-5 py-2 md:mt-5 my-2 text-base font-bold tracking-wide shadow bg-main-color text-white hover:bg-purple hover:text-secondary-color"
               disabled={false}
               onClick={() => {
                 const emoji = props.colorBlind
