@@ -44,7 +44,7 @@ function Game(props: GameProps) {
 
   const [errorMessage, setErrorMessage] = useState("")
   const [doneMessage, setDoneMessage] = useState("")
-  const [currentAPY, setCurrentAPY] = useState("")
+  const [currentAPY, setCurrentAPY] = useState("8")
 
   const tableRef = useRef<HTMLTableElement>(null);
 
@@ -75,7 +75,10 @@ function Game(props: GameProps) {
     setErrorMessage("")
 
     const currentApy = wordleScoreToAPY(guesses.length)
-    setCurrentAPY(currentApy.toString())
+    if(guesses.length === 0)
+      setCurrentAPY("8")
+    else
+      setCurrentAPY(currentApy.toString())
 
     const gameOver = (apy: number) =>
     `Congrats! Click here to earn your ${apy}% APY today!`
@@ -221,12 +224,12 @@ function Game(props: GameProps) {
         )}
         { doneMessage && (
           <Link href="https://app.moonfi.co/" passHref>
-            <button
-              type="button"
+            <a
               className="w-full items-center justify-center rounded-full bg-secondary-color sm:px-5 px-2 py-2 md:mt-5 my-2 text-main-color font-semibold md:tracking-wide md:text-lg sm:text-base text-xs"
+              target="_blank" rel="noopener noreferrer"
             >
               {doneMessage}
-            </button>
+            </a>
           </Link>
         )}
 
