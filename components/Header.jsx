@@ -5,26 +5,28 @@ import styles from './Header.module.css'
 export const Header = () => {
     return (
     <>
-        <div className="flex-1 flex h-full md:flex-row flex-col lg:pr-36 p-0">
-            <div className="flex-1">
+        <div className="flex md:flex-row flex-col">
+            <div className="flex-1 basis-3/4 justify-end items-end">
                 <div className="flex flex-col">
-                    <div className="flex-1 text-left pr-10 lg:pt-28 pb-10">
+                    <div className="basis-3/4 text-left">
                         <div className={styles.typewriter1}>
-                            <p className="font-bold lg:text-6xl md:text-4xl sm:text-3xl text-[22px] text-main-color tracking-wider">Earn 30% APY</p>
+                            <p className="font-bold lg:text-6xl md:text-4xl sm:text-3xl text-[22px] text-main-color tracking-wider">Earn 8% APY</p>
                         </div>
                         <div className={styles.typewriter2}>
                             <p className="font-bold lg:text-6xl md:text-4xl sm:text-3xl text-[22px] text-main-color tracking-wider">By Playing Wordle</p>
                         </div>
                     </div>
-                    <div className="flex-1">
+                    <div className="basis-1/4 mt-10">
                         <h2 className="text-left lg:text-xl md:text-lg text-base p-2">
-                            Earn up to <b>30%</b> interest on your savings - by playing Wordle. Join us now to earn the highest yields on the market and have fun doing so.
+                            Earn up to <b>8%</b> interest on your savings - by playing Wordle.
+                            Join us now to earn the highest yields on the market and have fun doing so.
                         </h2>
                     </div>
                 </div>
             </div>
-            <div className="grow">
+            <div className="basis-1/4 items-end justify-end">
                 <Image
+                    className="m-auto"
                     src="/game-art.svg"
                     alt="game"
                     layout="responsive"

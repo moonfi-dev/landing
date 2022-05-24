@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  companyName: 'moonfi'
+  AIRTABLE_API_KEY: 'keyFAXO0VtU5TJJps'
+  AIRTABLE_BASE_KEY: 'appF4MHAqJKvrjSw7'
+  DISCORD_INVITE: 'https://discord.gg/AY85vWmgev'
+
 jobs:
   build:
 

@@ -1,17 +1,16 @@
-import styles from './Waitlist.module.css'
+import styles from './Email.module.css'
 // import Image from 'next/image'
 import { useState } from 'react';
 import airtable from 'airtable';
 import validator from "email-validator"
 
-export const Waitlist = () => {
+export const Email = () => {
     const [email, setEmail] = useState("");
     const [hasSubmitted, setHasSubmitted] = useState(false);
     const [error, setError] = useState(null);
     
     const submit = async (e) => {
         e.preventDefault();
-        console.log("test")
         // Validate email
         if (!email) {
             setError("Missing email");
@@ -63,7 +62,7 @@ export const Waitlist = () => {
                     value={email} onChange={e => setEmail(e.target.value)}/>
             
             <button type="submit" className={[styles.formInput, styles.formSubmitButton].join(" ")}>
-                Join Waitlist
+                Join Email List
             </button>
             
             {error ? <div className={styles.error}>{error}</div> : null}

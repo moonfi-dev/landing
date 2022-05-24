@@ -1,21 +1,12 @@
 import Link from 'next/link';
 // import Image from 'next/image'
 import { useState } from 'react';
-import React, { forwardRef, useRef } from 'react'
 
 export const Navbar = () => {
   const [active, setActive] = useState(false);
 
   const handleClick = () => {
     setActive(!active);
-  };
-
-  const handleJoinWaitlist = () => {
-    if (window !== undefined) {
-      document.getElementById('#waitlist-page').scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
   };
 
   return (
@@ -53,16 +44,22 @@ export const Navbar = () => {
           }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
         >
           <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto'>
+            <Link href="/about" passHref>
+              <button
+                type="button"
+                className="w-full items-center justify-center rounded-full px-5 py-2 tracking-wide text-main-color md:inline-flex md:w-auto"
+              >
+                About
+              </button>
+            </Link>
             <Link href="https://app.moonfi.co">
               <button
                 type="button" 
-                // onClick={() => { handleJoinWaitlist() }}
                 className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded-full bg-secondary-color text-main-color font-semibold items-center justify-center'
               >
-                  Go to App
+                  Earn Now
               </button>
             </Link>
-            
           </div>
         </div>
       </nav>
