@@ -28,7 +28,7 @@ const Home: NextPage = () => {
 
       <main className="w-screen min-h-screen flex-1 flex-col items-center justify-center bg-white text-center">
         <div className="w-screen min-h-screen flex flex-col">
-          <Navbar />
+          <Navbar showSlogan={true}/>
           <div className="flex grow">
             <GameApp />
           </div>

@@ -18,7 +18,7 @@ const About: NextPage = () => {
       </Head>
 
       <main className="w-screen min-h-screen flex flex-col">
-        <Navbar />
+        <Navbar showSlogan={false} />
         <div className="grow flex flex-col justify-center items-center lg:px-36 px-12 pb-5">
           <Header />
           <div className="flex md:flex-row flex-col justify-between justify-items-stretch lg:mb-10 md:mb-8 mb-2 mt-5">

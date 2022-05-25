@@ -2,7 +2,7 @@ import Link from 'next/link';
 // import Image from 'next/image'
 import { useState } from 'react';
 
-export const Navbar = () => {
+export const Navbar = (props) => {
   const [active, setActive] = useState(false);
 
   const handleClick = () => {
@@ -19,11 +19,14 @@ export const Navbar = () => {
             </span>
           </a>
         </Link>
-        <div className='animate-bounce flex-1 grow items-center'>
-          <span className='text-xl text-main-color font-semibold tracking-wider'>
-            Play Wordle, Earn Money
-          </span>
-        </div>
+        { props?.showSlogan && (
+          <div className='animate-bounce flex-1 grow items-center'>
+            <span className='text-xl text-main-color font-semibold tracking-wider'>
+              Play Wordle, Earn Money
+            </span>
+          </div>
+        )}
+        
         <button
           className='inline-flex flex-row-reverse p-3 rounded lg:hidden basis-1/5 text-main-color ml-auto outline-none'
           onClick={handleClick}
