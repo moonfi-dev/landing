@@ -11,7 +11,7 @@ export const Navbar = (props) => {
 
   return (
     <>
-      <nav id="#navbar" className='flex justify-between items-start flex-wrap md:px-10 px-2'>
+      <nav id="#navbar" className='flex justify-between items-start flex-wrap md:px-10 px-2 md:pt-3'>
         <Link href='/'>
           <a className='inline-flex self-stretch items-center lg:basis-1/4 basis-1/5'>
             <span className='text-xl text-main-color font-bold tracking-wide'>
