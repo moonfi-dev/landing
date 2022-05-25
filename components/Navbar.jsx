@@ -1,7 +1,6 @@
 import Link from 'next/link';
 // import Image from 'next/image'
 import { useState } from 'react';
-import React, { forwardRef, useRef } from 'react'
 
 export const Navbar = () => {
   const [active, setActive] = useState(false);
@@ -10,26 +9,23 @@ export const Navbar = () => {
     setActive(!active);
   };
 
-  const handleJoinWaitlist = () => {
-    if (window !== undefined) {
-      document.getElementById('#waitlist-page').scrollIntoView({
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
     <>
-      <nav id="#navbar" className='flex items-center flex-wrap px-10 py-6'>
+      <nav id="#navbar" className='flex justify-between items-center flex-wrap md:px-10 px-3 py-6'>
         <Link href='/'>
-          <a className='inline-flex items-center'>
+          <a className='inline-flex items-center lg:basis-1/4 basis-1/5'>
             <span className='text-xl text-main-color font-bold tracking-wide'>
               {process.env.companyName}
             </span>
           </a>
         </Link>
+        <div className='animate-bounce flex-1 grow items-center'>
+          <span className='text-xl text-main-color font-semibold tracking-wider'>
+            Play Wordle, Earn Money
+          </span>
+        </div>
         <button
-          className='inline-flex p-3 rounded lg:hidden text-main-color ml-auto outline-none'
+          className='inline-flex flex-row-reverse p-3 rounded lg:hidden basis-1/5 text-main-color ml-auto outline-none'
           onClick={handleClick}
         >
           <svg
@@ -50,19 +46,25 @@ export const Navbar = () => {
         <div
           className={`${
             active ? '' : 'hidden'
-          }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
+          }   w-full lg:inline-flex lg:basis-1/4`}
         >
           <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start flex flex-col lg:h-auto'>
+            <Link href="/about" passHref>
+              <button
+                type="button"
+                className="w-full items-center justify-center rounded-full px-5 py-2 tracking-wide text-main-color md:inline-flex md:w-auto"
+              >
+                About
+              </button>
+            </Link>
             <Link href="https://app.moonfi.co">
               <button
                 type="button" 
-                // onClick={() => { handleJoinWaitlist() }}
                 className='lg:inline-flex lg:w-auto w-full px-5 py-2 rounded-full bg-secondary-color text-main-color font-semibold items-center justify-center'
               >
-                  Go to App
+                  Earn Now
               </button>
             </Link>
-            
           </div>
         </div>
       </nav>
