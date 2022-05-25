@@ -11,16 +11,16 @@ export const Navbar = (props) => {
 
   return (
     <>
-      <nav id="#navbar" className='flex justify-between items-center flex-wrap md:px-10 px-3 py-6'>
+      <nav id="#navbar" className='flex justify-between items-start flex-wrap md:px-10 px-2'>
         <Link href='/'>
-          <a className='inline-flex items-center lg:basis-1/4 basis-1/5'>
+          <a className='inline-flex self-stretch items-center lg:basis-1/4 basis-1/5'>
             <span className='text-xl text-main-color font-bold tracking-wide'>
               {process.env.companyName}
             </span>
           </a>
         </Link>
         { props?.showSlogan && (
-          <div className='animate-bounce flex-1 grow items-center'>
+          <div className='motion-safe:animate-bounce flex-1 grow items-center mt-5'>
             <span className='text-xl text-main-color font-semibold tracking-wider'>
               Play Wordle, Earn Money
             </span>

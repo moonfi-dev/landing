@@ -48,29 +48,6 @@ function Game(props: GameProps) {
 
   const tableRef = useRef<HTMLTableElement>(null);
 
-  async function share(copiedMessage: string, text?: string) {
-    var url = 'https://moonfi.co'
-    const body = url + (text ? '\n\n' + text : '')
-    if (
-      /android|iphone|ipad|ipod|webos/i.test(navigator.userAgent) &&
-      !/firefox/i.test(navigator.userAgent)
-    ) {
-      try {
-        await navigator.share({ text: body })
-        return
-      } catch (e) {
-        console.warn('navigator.share failed:', e)
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(body)
-      setDoneMessage(copiedMessage)
-      return
-    } catch (e) {
-      console.warn('navigator.clipboard.writeText failed:', e)
-    }
-  }
-
   useEffect(() => {
     setErrorMessage("")
 
@@ -126,9 +103,6 @@ function Game(props: GameProps) {
       // }
       setGuesses((guesses) => guesses.concat([currentGuess]));
       setCurrentGuess((guess) => "");
-
-      const gameOver = (verbed: string) =>
-      `You ${verbed}! The answer was ${target.toUpperCase()}`
       
       if (currentGuess === target) {
         setGameState(GameState.Won);
@@ -239,33 +213,6 @@ function Game(props: GameProps) {
         letterInfo={letterInfo}
         onKey={onKey}
       />
-      <div className="flex flex-col py-auto">
-          {gameState !== GameState.Playing && (
-            <button
-              className="m-auto rounded-full border border-transparent px-5 py-2 md:mt-5 my-2 text-base font-bold tracking-wide shadow bg-main-color text-white hover:bg-purple hover:text-secondary-color"
-              disabled={false}
-              onClick={() => {
-                const emoji = props.colorBlind
-                  ? ['⬛', '🟦', '🟧']
-                  : ['⬛', '🟨', '🟩']
-                const score = gameState === GameState.Lost ? 'X' : guesses.length
-                share(
-                  'Result copied to clipboard!',
-                  `${gameName} ${score}/${props.maxGuesses}\n` +
-                    guesses
-                      .map((guess) =>
-                        clue(guess, target)
-                          .map((c) => emoji[c.clue ?? 0])
-                          .join('')
-                      )
-                      .join('\n')
-                )
-              }}
-            >
-              Share your result!
-            </button>
-          )}
-      </div>
     </div>
   )
 }

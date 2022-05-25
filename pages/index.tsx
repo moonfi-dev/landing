@@ -3,22 +3,12 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 
-import React, { useState, forwardRef, useRef } from 'react'
-import * as CSS from 'csstype';
-
 import { Navbar } from '../components/Navbar'
 import { Footer } from '../components/Footer'
 
 import GameApp from '../components/Wordle'
 
 const Home: NextPage = () => {
-  const [isFlipped, setFlipped] = useState(false);
-
-  interface Style extends CSS.Properties, CSS.PropertiesHyphen {}
-  const cardContainerStyle: Style = {
-    'flex-grow': 1,
-  };
-
   return (
     <div className="bg-white min-h-screen flex flex-col">
       <Head>

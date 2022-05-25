@@ -79,6 +79,7 @@ h1 {
   flex-direction: column;
   flex-grow: 1;
   justify-content: space-around;
+  padding-bottom: 3%;
 }
 
 table.Game-rows {
