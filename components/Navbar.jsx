@@ -20,9 +20,9 @@ export const Navbar = (props) => {
           </a>
         </Link>
         { props?.showSlogan && (
-          <div className='motion-safe:animate-bounce flex-1 grow items-center mt-5'>
+          <div className='flex-1 grow items-center mt-5'>
             <span className='text-xl text-main-color font-semibold tracking-wider'>
-              Play Wordle, Earn Money
+              Play Wordle, Earn Interest
             </span>
           </div>
         )}
